@@ -11,7 +11,13 @@ from .binvox_rw import read_as_3d_array
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-
+"""
+@zrj221900357 添加
+定义数据包装器，随机打乱数据集
+__init__(self, dataset):传入数据集并生成随机索引列表
+__len__(self):返回数据集长度
+__getitem__(self, index):根据给定的索引index返回数据集中的样本
+"""
 class ShuffleDataset(Dataset):
     def __init__(self, dataset):
         super(ShuffleDataset, self).__init__()
@@ -24,7 +30,10 @@ class ShuffleDataset(Dataset):
     def __getitem__(self, index):
         return self._dataset[self._indices[index].item()]
 
-
+"""
+@zrj221900357 添加注释
+ShapeNetDataset用语加载和处理ShapeNetDataset数据集
+"""
 class ShapeNetDataset(Dataset):
     def __init__(
             self,
@@ -60,6 +69,10 @@ class ShapeNetDataset(Dataset):
         with open(annot_path) as annot_file:
             annots = json.load(annot_file)
 
+        """
+        @zrj221900357 添加
+        将数据装载进入一个列表，记录标签、分类名称和模型id
+        """
         self._meta_data = []
         for taxonomy in annots:
             for model_id in taxonomy[split]:
@@ -75,6 +88,8 @@ class ShapeNetDataset(Dataset):
         self._mode = mode
         self._background = background
         self._view_num = view_num
+        # @zrj221900357添加
+        self._background = (255, 255, 255)  # 白色背景
 
     def __getitem__(self, index):
         meta_data = self._meta_data[index]

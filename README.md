@@ -61,3 +61,12 @@ python train.py \
     --loss_type dice \
 ```
 
+## Attention
+
+The content of the above document is from the original author. The following are the precautions for the reproduction process:
+- Before reproducing the project, please read the reproduction guide to ensure that you can quickly solve the problems I encountered previously.
+- Due to time constraints, I can only provide the project reproduction guide in Chinese. Please forgive me. 
+
+以上文档内容来源于原作者，以下为复现过程的注意事项
+- 在进行项目复现之前请阅读复现指南内容，以确保能快速解决我先前遇到的问题
+- 出于时间原因，我仅能提供中文版的项目复现指南，请见谅

@@ -14,16 +14,38 @@ from src.utils import load_config
 
 
 def save_binvox(voxel, dest, translate, scale):
+    """
+    @zrj-cn 添加注释
+    将体素数据保存为binvox格式，然后调用write方法将其保存到指定文件
+    参数：
+        voxel (numpy.ndarray): 体素数据。
+        dest (str): 保存路径。
+        translate (tuple): 平移向量。
+        scale (float): 缩放比例。
+    """
     binvox = Voxels(voxel, voxel.shape, translate, scale, 'xyz')
     binvox.write(open(dest, 'wb'))
 
 
 def to_numpy(image):
+    """
+    @zrj-cn 添加注释
+    将PIL图像转换为numpy数组，并进行归一化
+    参数：
+        image:PIL图像对象。
+    返回：
+        numpy.ndarray: 转换后的numpy数组。
+    """
     image.convert("RGB")
+    #转换并归一化
     return [np.asarray(image, dtype=np.float32) / 255]
 
 
 if __name__ == '__main__':
+    """
+    @zrj-cn 添加以下中文注释
+    """
+    # 创建一个命令行参数解析器，用于解析命令行参数
     parser = argparse.ArgumentParser(description='Train transformer conditioned on image inputs')
     parser.add_argument('--annot_path', type=str, required=True,
                         help='Path to "ShapeNet.json"')
@@ -55,11 +77,13 @@ if __name__ == '__main__':
                         help='Path to save the prediction')
 
     parser = pl.Trainer.add_argparse_args(parser)
+    # 解析命令行参数
     args = parser.parse_args()
 
     if args.resume_from_checkpoint is None:
         raise ValueError('No checkpoint specified')
 
+    # 打印参数
     pp = PrettyPrinter(indent=4)
     pp.pprint(vars(args))
 
@@ -109,7 +133,7 @@ if __name__ == '__main__':
     )
 
     trainer = pl.Trainer.from_argparse_args(args, logger=False)
-
+    # 如果指定了 --predict 参数，则进行预测并保存结果
     if args.predict:
         if args.save_path is None:
             raise ValueError('save_path is not specified')
